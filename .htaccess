@@ -1,0 +1,58 @@
+# vroom vroom
+RewriteEngine On
+
+### ROUTES ###
+
+# index.php
+RewriteRule ^$ views/index.php [NC,L]
+
+# login.php
+RewriteRule ^login$ views/login.php [NC,L]
+
+# logout.php
+RewriteRule ^logout$ views/logout.php [NC,L]
+
+# signup.php
+RewriteRule ^signup$ views/signup.php [NC,L]
+
+# homepage.php
+RewriteRule ^homepage$ views/homepage.php [NC,L]
+RewriteRule ^homepage/(.*)$ views/homepage.php?category=$1 [NC,L]
+
+# dashboard.php
+RewriteRule ^dashboard$ views/dashboard.php [NC,L]
+
+# profile.php
+RewriteRule ^profile$ views/profile.php [NC,L]
+
+
+### CSS ###
+
+# app.css
+RewriteRule ^app.css$ css/app.css [NC,L]
+
+
+### JS ###
+
+# app.js
+RewriteRule ^app.js$ js/app.js [NC,L]
+
+# validator.js
+RewriteRule ^validator.js$ js/validator.js [NC,L]
+
+# comments.js
+RewriteRule ^comments.js$ js/comments.js [NC,L]
+
+### API ###
+
+# api-signup.php
+RewriteRule ^api-signup$ api/api-signup.php [NC,L]
+
+# api-login.php
+RewriteRule ^api-login$ api/api-login.php [NC,L]
+
+# api-email-available.php
+RewriteRule ^api-email-available$ api/api-email-available.php [NC,L]
+
+# api-users-pagination.php
+RewriteRule ^api-users-pagination$ api/api-users-pagination.php [NC,L]
