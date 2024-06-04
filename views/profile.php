@@ -21,7 +21,14 @@ if ($user_id) {
 <main class="max-w-2xl m-auto p-4">
   <section class="flex justify-start items-center gap-8 m-4">
     <?php foreach ($users as $user) : ?>
-      <div class="text-4xl select-none"><?= $user['user_img'] ?></div>
+      <form onsubmit="updateUserImg(event);" method="POST" enctype="multipart/form-data">
+        <input type="hidden" name="user_id" value="<?php echo $user_id;?>">
+        <label for="profilepicture">Profile Picture</label>  
+        <input type="file" id="profilepicture" name="profilepicture">
+        <button type="submit">Upload</button>
+        <!-- <div class="text-4xl select-none h-[100px] w-[100px] overflow-hidden"><?= $user['user_img'] ?></div> -->
+        <img src="data:image/jpg;charset=utf8;base64,<?php echo base64_encode($user['user_img']); ?>" /> 
+      </form>
       <div class="flex flex-col gap-2">
         <div class="flex gap-2">
           <form class="flex gap-2" onsubmit="updateUser(event); return false">

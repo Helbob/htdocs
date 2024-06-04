@@ -18,7 +18,7 @@ if ($user_id) {
 ?>
 <dialog  class="z-50 fixed top-0 left-0 w-screen h-screen bg-transparent">
     <div id="product_modal" class="w-full h-full flex justify-center items-center">
-        <div class="p-4 rounded-lg w-2/3 h-4/6 bg-white">
+        <div class="p-4 rounded-lg w-2/3 h-4/6 bg-white overflow-auto">
             <form method="dialog" class="w-fit ml-auto">
                 <button>
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
@@ -26,26 +26,45 @@ if ($user_id) {
                     </svg>
                 </button>
             </form>
-            <section class="flex">
-                <article class="w-1/2 flex items-center">
-                    <p id="product_img_modal" class="text-5xl ml-12"></p>
+            <section class="flex max-md:flex-col max-md:items-center gap-4 h-[95%] overflow-hidden">
+                <article class="w-1/3 flex flex-col items-center h-fit">
+                    <div class="w-full rounded-lg">
+                        <p id="product_img_modal" class="text-5xl mx-auto text-center"></p>
+                    </div>
+                    <h3 id="product_comment_name" class="font-medium text-base md:text-lg">PRODUCT NAME</h3>
+                    <div class="flex justify-between">
+                        <div class="text-yellow bg-yellow bg-opacity-10 rounded-lg flex self-start place-items-center gap-1.5 px-1.5 py-0.5 h-min">
+                            <img src="/img/rating.svg" alt="rating star" class="select-none">
+                            <p id="product_comment_rating">PRODUCT Rating</p>
+                        </div>
+                        <div class="text-base md:text-lg font-medium drop-shadow-card">
+                            <h4 id="product_comment_price">PRODUCT price</h4>
+                        </div>
+                    </div>
+                    <p id="product_comment_category">PRODUCT category</p>
+                    <p id="product_comment_description">PRODUCT description</p>
+
                 </article>
-                <article class="w-1/2">
-                    <p>User comments</p>
-                    <article id="user_comments_list" class="mt-2 mb-2"></article>
-                    <div class="w-full border-solid border-2 rounded-lg p-1">    
+                <article class="w-2/3 h-full overflow-auto grid">
+                    <p class="text-lg font-semibold">User comments</p>
+                        <article id="user_comments_list" class="mt-2 mb-2  overflow-auto"></article>
+                    <div class="w-full border-solid border-2 rounded-lg p-2"> 
                         <?php foreach ($users as $user) : ?>
                             <div class="flex gap-2 items-center">
-                                <div class="text-lg select-none"><?= $user['user_img'] ?></div>
+                                <img class="w-[35px] h-[35px] object-cover rounded-full" src="data:image/jpg;charset=utf8;base64,<?php echo base64_encode($user['user_img']); ?>" /> 
                                 <span class="text-base"><?= $user['user_first_name'] ." ". $user['user_last_name']?></span>
                             </div>
                             <?php endforeach ?>
-                            <textarea name="comment" id="" method="POST" class="w-full rounded-lg outline-none resize-none"></textarea>
-                            <button class="bg-darker-blue text-white py-1 px-3 rounded ml-auto">Comment</button>
+                            <form method="POST" onsubmit="submitComment()">
+                                <input type="text" id="product_comment_id" name="product_comment_id" class="hidden">
+                                <textarea type="text" name="comment" id="comment" class="w-full rounded-lg outline-none resize-none"></textarea>
+                                <div class="flex">
+                                    <button type="submit" class="bg-darker-blue text-white py-2 px-4 rounded ml-auto">Comment</button>
+                                </div>
+                            </form>
                         </div>
                     </article>
                 </section>
-                <span id="product_comment_id"></span>
         </div>
     </div>
 </dialog>

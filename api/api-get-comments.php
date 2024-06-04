@@ -17,7 +17,13 @@
     WHERE products.product_id = :comment_id');
     $q->bindValue(':comment_id', $comment_id);
     $q->execute();
-    $comments = $q->fetchAll();
+    
+    $comments = $q->fetchAll(PDO::FETCH_ASSOC);
+
+    foreach ($comments as &$comment) {
+        // Base64 encode the user_img field
+        $comment['user_img'] = base64_encode($comment['user_img']);
+    }
     echo json_encode($comments);
 
   } catch(Exception $e) {

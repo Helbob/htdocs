@@ -475,6 +475,19 @@ async function updateUser(event, userUpdate) {
   console.log(data);
 }
 
+async function updateUserImg(event) {
+  event.preventDefault();
+  console.log(event.target);
+  const imgForm = event.target;
+  const url = "api/api-upload-img.php";
+  const response = await fetch(url, {
+    method: "POST",
+    body: new FormData(imgForm),
+  });
+  const data = await response.json();
+  console.log(data);
+}
+
 function updateInputWidth() {
   const spanElement = event.target.previousElementSibling;
   const inputField = event.target;

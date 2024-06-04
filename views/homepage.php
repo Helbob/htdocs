@@ -44,8 +44,8 @@
       <?php endforeach ?>
     </ul>
   </section>
-  <?php require_once __DIR__ . '/_components/_product_popup.php'; ?>
   <section class="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-6">
+    <?php require_once __DIR__ . '/_components/_product_popup.php'; ?>
     <?php foreach ($products as $key=>$product) : ?>
       <article onclick='openModal(event, <?= json_encode($product) ?>)'  class="homepage_products flex flex-col bg-white rounded-2xl p-2.5 md:p-5 drop-shadow-card"> <!-- OnClick til en modal -->
         <div class="text-4xl flex items-center rounded-lg aspect-square" style="background-color: <?= $product['category_color'] ?>;">
