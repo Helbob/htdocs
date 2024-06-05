@@ -18,43 +18,42 @@ if ($user_id) {
 ?>
 <dialog  class="z-50 fixed top-0 left-0 w-screen h-screen bg-transparent">
     <div id="product_modal" class="w-full h-full flex justify-center items-center">
-        <div class="p-4 rounded-lg w-2/3 h-4/6 bg-white overflow-auto">
+        <div class="p-4 rounded-lg md:w-2/3 md:h-4/6 max-md:h-full max-md:w-full bg-white overflow-auto">
             <form method="dialog" class="w-fit ml-auto">
                 <button>
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8">
                     <path stroke-linecap="round" stroke-linejoin="round" d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                     </svg>
                 </button>
             </form>
             <section class="flex max-md:flex-col max-md:items-center gap-4 h-[95%] overflow-hidden">
-                <article class="w-1/3 flex flex-col items-center h-fit">
+                <article class="md:w-1/3 max-md:w-full flex flex-col gap-2 items-center h-fit">
                     <div class="w-full rounded-lg">
-                        <p id="product_img_modal" class="text-5xl mx-auto text-center"></p>
+                        <p id="product_img_modal" class="text-5xl mx-auto text-center max-md:py-8"></p>
                     </div>
+                    <div class="flex flex-col gap-2 max-md:w-full">
                     <h3 id="product_comment_name" class="font-medium text-base md:text-lg">PRODUCT NAME</h3>
-                    <div class="flex justify-between">
+                    <div class="flex justify-between items-center">
                         <div class="text-yellow bg-yellow bg-opacity-10 rounded-lg flex self-start place-items-center gap-1.5 px-1.5 py-0.5 h-min">
                             <img src="/img/rating.svg" alt="rating star" class="select-none">
                             <p id="product_comment_rating">PRODUCT Rating</p>
                         </div>
-                        <div class="text-base md:text-lg font-medium drop-shadow-card">
-                            <h4 id="product_comment_price">PRODUCT price</h4>
-                        </div>
+                            <h4 id="product_comment_price" class=" text-base md:text-lg font-medium drop-shadow-card">PRODUCT price</h4>
                     </div>
-                    <p id="product_comment_category">PRODUCT category</p>
-                    <p id="product_comment_description">PRODUCT description</p>
-
+                    <p id="product_comment_category" class="w-full text-gray-400">PRODUCT category</p>
+                    <p id="product_comment_description" >PRODUCT description</p>
+                    </div>
                 </article>
-                <article class="w-2/3 h-full overflow-auto grid">
-                    <p class="text-lg font-semibold">User comments</p>
+                <article class="md:w-2/3 max-md:w-full h-full overflow-auto grid grid-rows-[auto_1fr_auto]">
+                    <p class="text-lg font-semibold ">User comments</p>
                         <article id="user_comments_list" class="mt-2 mb-2  overflow-auto"></article>
-                    <div class="w-full border-solid border-2 rounded-lg p-2"> 
+                    <div class="w-full border-solid border-2 rounded-lg p-2 h-fit mt-auto"> 
                         <?php foreach ($users as $user) : ?>
                             <div class="flex gap-2 items-center">
-                                <img class="w-[35px] h-[35px] object-cover rounded-full" src="data:image/jpg;charset=utf8;base64,<?php echo base64_encode($user['user_img']); ?>" /> 
+                                <img class="w-[35px] h-[35px] object-cover rounded-full object-center aspect-[1/1]" src="data:image/jpg;charset=utf8;base64,<?php echo base64_encode($user['user_img']); ?>" /> 
                                 <span class="text-base"><?= $user['user_first_name'] ." ". $user['user_last_name']?></span>
                             </div>
-                            <?php endforeach ?>
+                        <?php endforeach ?>
                             <form method="POST" onsubmit="submitComment()">
                                 <input type="text" id="product_comment_id" name="product_comment_id" class="hidden">
                                 <textarea type="text" name="comment" id="comment" class="w-full rounded-lg outline-none resize-none"></textarea>

@@ -486,6 +486,15 @@ async function updateUserImg(event) {
   });
   const data = await response.json();
   console.log(data);
+
+  if (data.user_img) {
+    document.getElementById(
+      "profile_img"
+    ).src = `data:image/jpg;charset=utf8;base64,${data.user_img}`;
+    console.log(data);
+  } else {
+    console.log("no image");
+  }
 }
 
 function updateInputWidth() {

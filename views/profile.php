@@ -27,7 +27,7 @@ if ($user_id) {
         <input type="file" id="profilepicture" name="profilepicture">
         <button type="submit">Upload</button>
         <!-- <div class="text-4xl select-none h-[100px] w-[100px] overflow-hidden"><?= $user['user_img'] ?></div> -->
-        <img src="data:image/jpg;charset=utf8;base64,<?php echo base64_encode($user['user_img']); ?>" /> 
+        <img id="profile_img" class="max-w-[150px] max-h-[150px] rounded-full object-cover object-center aspect-[1/1]" src="data:image/jpg;charset=utf8;base64,<?php echo base64_encode($user['user_img']); ?>" /> 
       </form>
       <div class="flex flex-col gap-2">
         <div class="flex gap-2">

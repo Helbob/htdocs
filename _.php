@@ -4,6 +4,7 @@
 
   session_start(); // start session on all pages
 
+  
   /*
   *  
   *  DATABASE

@@ -6,12 +6,21 @@
     $user_id = $_SESSION['user']['user_id'];
     $user_first_name = $_SESSION['user']['user_first_name'];
     $user_last_name = $_SESSION['user']['user_last_name']; 
-    $user_comments = $_POST['comment'];
+    //$user_comments = $_POST['comment'];
+    $user_comments_raw = $_POST['comment'];
+    // Sanitize the comment using htmlspecialchars
+    $user_comments = strip_tags($user_comments_raw);
+    $user_comments = htmlspecialchars($user_comments_raw, ENT_QUOTES | ENT_HTML5, 'UTF-8');
+    // Check if the sanitized comment is valid
+    if (!$user_comments) {
+        throw new Exception("Invalid comment");
+    }
+
     $product_id_comment_fk = $_POST['product_comment_id'];
 
    // echo json_encode(['id' => $product_id_comment_fk, 'comment' => $user_comments, 'user_id' =>$user_id, 'firstname' =>$user_first_name, 'lastname'=>$user_last_name]); 
     //exit;
-
+    
     $db = _db();
     $q = $db->prepare('
       INSERT INTO comments 
@@ -24,6 +33,7 @@
         :user_id_fk
         )'
     );
+    
     $q->bindValue(':comment_id', null);
     $q -> bindValue(':commenter_first_name', $user_first_name);
     $q -> bindValue(':commenter_last_name', $user_last_name);
