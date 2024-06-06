@@ -51,23 +51,39 @@ function printOutCommentInfo(listOfComments) {
   // add all/new comments
   listOfComments.reverse().forEach((comment) => {
     // console.log(comment);
-    const commentContainer = document.createElement("article");
-    commentContainer.classList.add(
-      "w-full",
-      "border-solid",
-      "border-2",
-      "rounded-lg",
-      "p-2",
-      "grid",
-      "mb-2"
-    );
-    commentContainer.innerHTML = `
+    if (
+      comment.comment_public_status == 0 ||
+      comment.commenter_id == comment.user_id
+    ) {
+      const commentContainer = document.createElement("article");
+      commentContainer.classList.add(
+        "w-full",
+        "border-solid",
+        "border-2",
+        "rounded-lg",
+        "p-2",
+        "grid",
+        "mb-2"
+      );
+      commentContainer.innerHTML = `
     <div class="flex items-center gap-2">
-    <img class="w-[35px] h-[35px] object-cover rounded-full object-center aspect-[1/1]" src="data:image/jpeg;base64,${comment.user_img}" />
-    <p class="text-base font-semibold">${comment.commenter_first_name} ${comment.commenter_last_name}</p></div>
+    <img class="w-[35px] h-[35px] object-cover rounded-full object-center aspect-[1/1]" src="data:image/jpeg;base64,${
+      comment.user_img
+    }" />
+    <p class="text-base font-semibold">${comment.commenter_first_name} ${
+        comment.commenter_last_name
+      }  <span class="text-sm text-gray-400">${
+        comment.toggle_public == 0 ? "Public" : "Private"
+      }</span></p></div>
     <p class=""text-xs>${comment.user_comment}</p>
   `;
-    userCommentsList.appendChild(commentContainer);
+      userCommentsList.appendChild(commentContainer);
+    } else if (
+      comment.comment_public_status == 1 &&
+      comment.commenter_id != comment.user_id
+    ) {
+      return;
+    }
   });
 }
 
@@ -105,11 +121,16 @@ async function submitComment() {
   const commentForm = event.target;
   const product_comment_id = event.target.product_comment_id.value;
   const comment = event.target.comment.value;
-  //console.log(commentForm);
-  /* const formData = {
-    product_comment_id: product_comment_id,
-    comment: comment,
-  }; */
+  const checkbox = event.target.comments_public_status.checked;
+  console.log(checkbox, comment, product_comment_id);
+  const formData = new FormData(commentForm);
+
+  // Ensure checkbox value is included
+  formData.append(
+    "comments_public_status",
+    commentForm.comments_public_status.checked ? 1 : 0
+  );
+  console.log(Array.from(formData.entries())); // Check form data
 
   // Correctly construct the URL for the fetch call
   const url = "api/api-post-comment.php"; // Ensure this path is correct relative to your HTML file
@@ -119,11 +140,11 @@ async function submitComment() {
       "Content-Type": "application/json",
     }, */
     method: "POST",
-    body: new FormData(commentForm),
+    body: formData,
   });
   const data = await response.json();
-
-  if (data[0].comment_id) {
+  console.log(data);
+  if (data.length > 0 && data[0].comment_id) {
     const commentContainer = document.createElement("article");
     commentContainer.classList.add(
       "w-full",
@@ -137,8 +158,14 @@ async function submitComment() {
 
     commentContainer.innerHTML = `
       <div class="flex items-center gap-2">
-    <img class="w-[35px] h-[35px] object-cover rounded-full object-center aspect-[1/1]" src="data:image/jpeg;base64,${data[0].user_img}" />
-    <p class="text-base font-semibold">${data[0].commenter_first_name} ${data[0].commenter_last_name}</p></div>
+    <img class="w-[35px] h-[35px] object-cover rounded-full object-center aspect-[1/1]" src="data:image/jpeg;base64,${
+      data[0].user_img
+    }" />
+    <p class="text-base font-semibold">${data[0].commenter_first_name} ${
+      data[0].commenter_last_name
+    } <span class="text-sm text-gray-400">${
+      data[0].toggle_public == 0 ? "Public" : "Private"
+    }</span></p></div>
     <p class=""text-xs>${data[0].user_comment}</p>
   `;
     userCommentsList.prepend(commentContainer);
@@ -146,5 +173,16 @@ async function submitComment() {
     commentForm.comment.value = " ";
   } else {
     console.log("Error: Comment not posted.");
+  }
+}
+
+// Toggle comment visability status: public/private
+function tgl_visability() {
+  console.log(event.target.checked);
+  const span = document.getElementById("comment_tgl_public");
+  if (span.textContent === "Public") {
+    span.textContent = "Private";
+  } else {
+    span.textContent = "Public";
   }
 }

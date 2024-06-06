@@ -17,6 +17,7 @@
   $q->execute();
   $products = $q->fetchAll();
   //echo json_encode($products);
+  echo $_SESSION['CSRF_token'];
 
 ?>
 

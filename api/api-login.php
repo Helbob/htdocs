@@ -24,6 +24,8 @@
     if (!password_verify($_POST['user_password'], $user['user_password'])) {
       throw new Exception('Invalid email or password.');
     }
+    $token = bin2hex(random_bytes(32));
+    $_SESSION['CSRF_token'] = $token;
 
     $_SESSION['user'] = [
       'user_id' => $user['user_id'],
@@ -32,8 +34,11 @@
       'user_email' => $user['user_email'],
       'user_role_fk' => $user['user_role_fk'],
     ];
-
-    echo json_encode($_SESSION['user']);
+    // Send response with user data and CSRF token
+    echo json_encode([
+      'user' => $_SESSION['user'],
+      'CSRF token' => $token
+    ]);
 
   } catch(Exception $e) {
     

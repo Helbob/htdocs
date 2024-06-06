@@ -18,15 +18,15 @@ if ($user_id) {
 ?>
 <dialog  class="z-50 fixed top-0 left-0 w-screen h-screen bg-transparent">
     <div id="product_modal" class="w-full h-full flex justify-center items-center">
-        <div class="p-4 rounded-lg md:w-2/3 md:h-4/6 max-md:h-full max-md:w-full bg-white overflow-auto">
-            <form method="dialog" class="w-fit ml-auto">
+        <div class="relative p-4 rounded-lg md:w-4/5 md:h-4/5 max-w-6xl max-md:h-full max-md:w-full bg-white overflow-auto">
+            <form method="dialog" class="absolute right-[10px] top-[10px] w-fit ml-auto">
                 <button>
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8">
                     <path stroke-linecap="round" stroke-linejoin="round" d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                     </svg>
                 </button>
             </form>
-            <section class="flex max-md:flex-col max-md:items-center gap-4 h-[95%] overflow-hidden">
+            <section class="flex max-md:flex-col max-md:items-center gap-4 h-full overflow-hidden">
                 <article class="md:w-1/3 max-md:w-full flex flex-col gap-2 items-center h-fit">
                     <div class="w-full rounded-lg">
                         <p id="product_img_modal" class="text-5xl mx-auto text-center max-md:py-8"></p>
@@ -55,10 +55,16 @@ if ($user_id) {
                             </div>
                         <?php endforeach ?>
                             <form method="POST" onsubmit="submitComment()">
+                                <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['CSRF_token'];?>">
                                 <input type="text" id="product_comment_id" name="product_comment_id" class="hidden">
                                 <textarea type="text" name="comment" id="comment" class="w-full rounded-lg outline-none resize-none"></textarea>
-                                <div class="flex">
-                                    <button type="submit" class="bg-darker-blue text-white py-2 px-4 rounded ml-auto">Comment</button>
+                                <div class="flex align-middle">
+                                <label class="relative inline-flex items-center cursor-pointer">
+                                    <input onclick="tgl_visability()" name="comments_public_status" type="checkbox" class="sr-only peer" >
+                                    <div class="w-11 h-6 bg-light-grey peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[10px] after:start-[1.5px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-400"></div>
+                                    <span id="comment_tgl_public" class="ml-2 text-gray-400 text-sm">Public</span>
+                                </label>
+                                <button type="submit" class="bg-darker-blue text-white py-2 px-4 rounded ml-auto">Comment</button>
                                 </div>
                             </form>
                         </div>
