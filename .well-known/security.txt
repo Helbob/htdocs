@@ -1,6 +1,4 @@
 # security.txt v1
 # updated at: 06-06-2024
-Contact: johndoe@domain.com
-Polices: localhost/policy
-Incidents: localhost/incident-report
-out-of-scope: localhost/out-of-scope
+Contact: mailto:vancet634@morxin.com
+Expires: 2024-07-24T10:57:00.000Z
