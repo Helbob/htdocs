@@ -13,6 +13,16 @@ try {
     
     $user_id = $_SESSION['user']['user_id'];  
     
+    $csrf_token_from_session = $_SESSION['CSRF_token'];
+
+    // Retrieve the CSRF token from the submitted form data
+    $csrf_token_from_form = $_POST['csrf_token'];
+
+    // Validate the CSRF token
+    if ($csrf_token_from_session!== $csrf_token_from_form) {
+        // Invalid CSRF token, reject the form submission
+        die('Invalid CSRF token');
+    }
     
     if(isset($_FILES['profilepicture'])) {
 

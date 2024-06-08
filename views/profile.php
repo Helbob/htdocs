@@ -22,12 +22,13 @@ if ($user_id) {
   <section class="flex justify-start items-center gap-8 m-4">
     <?php foreach ($users as $user) : ?>
       <form onsubmit="updateUserImg(event);" method="POST" enctype="multipart/form-data">
+        <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['CSRF_token'];?>">
         <input type="hidden" name="user_id" value="<?php echo $user_id;?>">
         <label for="profilepicture">Profile Picture</label>  
         <input type="file" id="profilepicture" name="profilepicture">
         <button type="submit">Upload</button>
-        <!-- <div class="text-4xl select-none h-[100px] w-[100px] overflow-hidden"><?= $user['user_img'] ?></div> -->
-        <img id="profile_img" class="max-w-[150px] max-h-[150px] rounded-full object-cover object-center aspect-[1/1]" src="data:image/jpg;charset=utf8;base64,<?php echo base64_encode($user['user_img']); ?>" /> 
+        <img id="profile_img" class="max-w-[150px] max-h-[150px] rounded-full object-cover
+         object-center aspect-[1/1]" src="data:image/jpg;charset=utf8;base64,<?php echo base64_encode($user['user_img']); ?>" /> 
       </form>
       <div class="flex flex-col gap-2">
         <div class="flex gap-2">
